@@ -14,27 +14,6 @@ async function api(path, options = {}) {
   }
   return res.json();
 }
-function confirmDelete(text) {
-  return new Promise(resolve => {
-    const modal = document.getElementById("confirm-modal");
-    const yes = document.getElementById("confirm-yes");
-    const no = document.getElementById("confirm-no");
-    const textparagraphe = document.getElementById("modal-text");
-    textparagraphe.innerText = text;
-    
-    modal.hidden = false;
-
-    yes.onclick = () => {
-      modal.hidden = true;
-      resolve(true);
-    };
-
-    no.onclick = () => {
-      modal.hidden = true;
-      resolve(false);
-    };
-  });
-}
 
 function taskCard(task) {
   const div = document.createElement("div");
@@ -64,8 +43,29 @@ function taskCard(task) {
   });
 
   div.querySelector('[data-role="delete"]').addEventListener("click", async () => {
+    function confirmDelete(text) {
+        return new Promise(resolve => {
+            const modal = document.getElementById("confirm-modal");
+            const yes = document.getElementById("confirm-yes");
+            const no = document.getElementById("confirm-no");
+            const textparagraphe = document.getElementById("modal-text");
+            textparagraphe.innerText = text;
+
+            modal.hidden = false;
+
+            yes.onclick = () => {
+            modal.hidden = true;
+            resolve(true);
+            };
+
+            no.onclick = () => {
+            modal.hidden = true;
+            resolve(false);
+            };
+        });
+    }
     const confirmed = await confirmDelete('Supprimer cette tâche ?');
-    if (!confirmed) return;
+    if (!confirmed) {return};
     await api(`/tasks/${task.id}`, { method: "DELETE" });
     await refresh();
   });
@@ -111,5 +111,29 @@ document.getElementById("createForm").addEventListener("submit", async (ev) => {
   document.getElementById("description").value = "";
   await refresh();
 });
+
+async function translate(locale = 'fr_fr') {
+  const response = await fetch(`${locale}.json`);
+  const labels = await response.json();
+
+  // Texte des éléments
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (labels[key]) {
+      el.textContent = labels[key];
+    }
+  });
+
+  // Placeholder des inputs / textarea
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (labels[key]) {
+      el.setAttribute('placeholder', labels[key]);
+    }
+  });
+}
+
+// Appel initial
+translate('fr_fr');
 
 refresh();

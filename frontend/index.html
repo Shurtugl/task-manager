@@ -7,45 +7,48 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <main class="container">
-    <header class="header">
-      <h1>Task Manager</h1>
-      <p>Mini app fil rouge pour CI/CD + tests</p>
-    </header>
+    <main class="container">
+        <header class="header">
+            <h1 data-i18n="appTitle"></h1>
+            <p data-i18n="appSubtitle"></p>
+        </header>
 
-    <div id="confirm-modal" hidden>
-        <p id="modal-text"></p>
-        <button id="confirm-yes">Oui</button>
-        <button id="confirm-no">Non</button>
-    </div>
+        <div id="confirm-modal" hidden>
+            <p data-i18n="confirmModalText"></p>
+            <button data-i18n="confirmYes"></button>
+            <button data-i18n="confirmNo"></button>
+        </div>
 
-    <section class="card">
-      <h2>Créer une tâche</h2>
-      <form id="createForm">
-        <label>
-          Titre
-          <input id="title" type="text" required maxlength="200" placeholder="Ex: Écrire les tests API" />
-        </label>
-        <label>
-          Description (optionnel)
-          <textarea id="description" maxlength="1000" placeholder="Détails..."></textarea>
-        </label>
-        <button type="submit">Créer</button>
-      </form>
-    </section>
+        <section class="card">
+            <h2 data-i18n="createTaskTitle"></h2>
+            <form id="createForm">
+                <label>
+                    <span data-i18n="labelTitle"></span>
+                    <input id="title" type="text" required maxlength="200" data-i18n-placeholder="placeholderTitle" />
+                </label>
+                <label>
+                    <span data-i18n="labelDescription"></span>
+                    <textarea id="description" maxlength="1000" data-i18n-placeholder="placeholderDescription"></textarea>
+                </label>
+                <button type="submit" data-i18n="buttonCreate"></button>
+            </form>
+        </section>
 
-    <section class="card">
-      <div class="row">
-        <h2>Liste des tâches</h2>
-        <button id="refreshBtn" type="button">Rafraîchir</button>
-      </div>
-      <div id="tasks"></div>
-    </section>
+        <section class="card">
+            <div class="row">
+                <h2 data-i18n="taskListTitle"></h2>
+                <button id="refreshBtn" type="button" data-i18n="buttonRefresh"></button>
+            </div>
+            <div id="tasks"></div>
+        </section>
 
-    <footer class="footer">
-      <small>API attendue sur <code id="apiUrlLabel"></code></small>
-    </footer>
-  </main>
+        <footer class="footer">
+            <small>
+                <span data-i18n="apiExpected"></span> <code id="apiUrlLabel"></code>
+            </small>
+        </footer>
+    </main>
+
 
   <script src="./app.js"></script>
 </body>

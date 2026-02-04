@@ -1,0 +1,16 @@
+{
+    "appTitle": "Task Manager",
+    "appSubtitle": "Mini app fil rouge pour CI/CD + tests",
+    "confirmModalText": "Supprimer cette tâche ?",
+    "confirmYes": "Oui",
+    "confirmNo": "Non",
+    "createTaskTitle": "Créer une tâche",
+    "labelTitle": "Titre",
+    "labelDescription": "Description (optionnel)",
+    "placeholderTitle": "Ex: Écrire les tests API",
+    "placeholderDescription": "Détails...",
+    "buttonCreate": "Créer",
+    "taskListTitle": "Liste des tâches",
+    "buttonRefresh": "Rafraîchir",
+    "apiExpected": "API attendue sur"
+}

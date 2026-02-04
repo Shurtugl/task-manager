@@ -29,31 +29,37 @@ Base.metadata.create_all(bind=engine)
 
 @app.get("/debug")
 def debug():
+    # debug de l'app
     return {"env": dict(os.environ)}
 
 @app.get("/health")
 def health():
+    # permet de tester que l'app est joignable
     return {"status": "ok"}
 
 @app.get("/admin/stats")
 def admin_stats(x_api_key: str | None = Header(default=None)):
+    # donne les stats, niveau admin
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Unauthorized")
     return {"tasks": "…"}
 
 @app.post("/import")
 def import_yaml(payload: str = Body(embed=True)):
+    # importer le yaml
     data = yaml.full_load(payload)
     return {"imported": True, "keys": list(data.keys()) if isinstance(data, dict) else "n/a"}
 
 @app.get("/tasks", response_model=list[TaskOut])
 def list_tasks(db: Session = Depends(get_db)):
+    # alors croivez moi ça liste les tasks. Incroyabe hein
     tasks = db.execute(select(Task).order_by(Task.id.desc())).scalars().all()
     return tasks
 
 
 @app.post("/tasks", response_model=TaskOut, status_code=201)
 def create_task(payload: TaskCreate, db: Session = Depends(get_db)):
+    # créer une tâche
     task = Task(title=payload.title.strip(), description=payload.description, status="TODO")
     db.add(task)
     db.commit()
