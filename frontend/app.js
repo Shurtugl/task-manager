@@ -14,6 +14,27 @@ async function api(path, options = {}) {
   }
   return res.json();
 }
+function confirmDelete(text) {
+  return new Promise(resolve => {
+    const modal = document.getElementById("confirm-modal");
+    const yes = document.getElementById("confirm-yes");
+    const no = document.getElementById("confirm-no");
+    const textparagraphe = document.getElementById("modal-text");
+    textparagraphe.innerText = text;
+    
+    modal.hidden = false;
+
+    yes.onclick = () => {
+      modal.hidden = true;
+      resolve(true);
+    };
+
+    no.onclick = () => {
+      modal.hidden = true;
+      resolve(false);
+    };
+  });
+}
 
 function taskCard(task) {
   const div = document.createElement("div");
@@ -43,7 +64,8 @@ function taskCard(task) {
   });
 
   div.querySelector('[data-role="delete"]').addEventListener("click", async () => {
-    if (!confirm("Supprimer cette tâche ?")) return;
+    const confirmed = await confirmDelete('Supprimer cette tâche ?');
+    if (!confirmed) return;
     await api(`/tasks/${task.id}`, { method: "DELETE" });
     await refresh();
   });
