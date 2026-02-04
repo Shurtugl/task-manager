@@ -2,6 +2,8 @@
 const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000");
 document.getElementById("apiUrlLabel").textContent = API_URL;
 
+import {confirmDelete} from '.modal.js';
+
 async function api(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {
     headers: { "Content-Type": "application/json" },
@@ -43,27 +45,7 @@ function taskCard(task) {
   });
 
   div.querySelector('[data-role="delete"]').addEventListener("click", async () => {
-    function confirmDelete(text) {
-        return new Promise(resolve => {
-            const modal = document.getElementById("confirm-modal");
-            const yes = document.getElementById("confirm-yes");
-            const no = document.getElementById("confirm-no");
-            const textparagraphe = document.getElementById("modal-text");
-            textparagraphe.innerText = text;
-
-            modal.hidden = false;
-
-            yes.onclick = () => {
-            modal.hidden = true;
-            resolve(true);
-            };
-
-            no.onclick = () => {
-            modal.hidden = true;
-            resolve(false);
-            };
-        });
-    }
+    
     const confirmed = await confirmDelete('Supprimer cette tâche ?');
     if (!confirmed) {return};
     await api(`/tasks/${task.id}`, { method: "DELETE" });
