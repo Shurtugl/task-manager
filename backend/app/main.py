@@ -84,7 +84,7 @@ def get_task(task_id: int, db: Session = Depends(get_db)):
 
 
 @app.put("/tasks/{task_id}", response_model=TaskOut)
-def update_task(task_id: int, payload: TaskUpdate, db: Session = Depends(get_db)):4
+def update_task(task_id: int, payload: TaskUpdate, db: Session = Depends(get_db)):
     """point entree update tâche"""
     task = db.get(Task, task_id)
     if not task:

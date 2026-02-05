@@ -2,3 +2,19 @@ site_name: Pik tasks
 theme:
   name: null
   custom_dir: 'cinder'
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences
