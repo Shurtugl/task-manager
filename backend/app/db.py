@@ -14,12 +14,12 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 class Base(DeclarativeBase):
-    # la base, quoi
+    """ la base, quoi"""
     pass
 
 
 def get_db() -> db:
-    # db provider
+    """ db provider """
     db = SessionLocal()
     try:
         yield db

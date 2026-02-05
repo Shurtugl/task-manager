@@ -1,0 +1,4 @@
+site_name: Pik tasks
+theme:
+  name: null
+  custom_dir: 'cinder'

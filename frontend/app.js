@@ -47,7 +47,9 @@ function taskCard(task) {
   div.querySelector('[data-role="delete"]').addEventListener("click", async () => {
     
     const confirmed = await confirmDelete('Supprimer cette tâche ?');
-    if (!confirmed) {return};
+    if (!confirmed) {
+        return;
+    };
     await api(`/tasks/${task.id}`, { method: "DELETE" });
     await refresh();
   });
